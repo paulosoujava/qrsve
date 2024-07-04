@@ -12,6 +12,7 @@
 3. **Gere seu QR Code:** Um QR Code único é gerado com base nas suas respostas e informações pessoais (nome, data de nascimento, etc.).
 4. **Compartilhe com a Clínica:** Compartilhe o QR Code ou o código gerado via WhatsApp com a clínica antes da sua consulta.
 5. **Cadastre seus Exames:** Salve seus exames no app para que o Geminiextraia os dados e crie um histórico completo.
+6. **Indicações** Relate sua dor e o app vai sugerir um profissional para tratar sua dor.
 
 **Para Médicos (Sub-App):**
 
@@ -29,29 +30,19 @@
 
 ## Screenshots:
 
-**Tela Inicial do App (Paciente):**
 
-![Tela Inicial](caminho/para/imagem/tela_inicial.png)
+![Tela](res/images/page1.png)
+![Tela](res/images/page2.png)
+![Tela](res/images/page3.png)
+![Tela](res/images/page4.png)
+![Tela](res/images/page4-1.png)
+![Tela](res/images/page4-2.png)
+![Tela](res/images/page7.png)
+![Tela](res/images/page8.png)
+![Tela](res/images/page9.png)
+![Tela](res/images/page10.png)
+![Tela](res/images/page11.png)
 
-**Tela de Cadastro de Sintomas:**
-
-![Cadastro de Sintomas](caminho/para/imagem/cadastro_sintomas.png)
-
-**Tela de Geração do QR Code:**
-
-![Geração do QR Code](caminho/para/imagem/qr_code.png)
-
-**Tela do Leitor de QR Code (Médico):**
-
-![Leitor de QR Code](caminho/para/imagem/leitor_qr_code.png)
-
-**Tela de Identificação de Medicamentos:**
-
-![Identificação de Medicamentos](caminho/para/imagem/medicamentos.png)
-
-**Tela de Cronologia de Exames:**
-
-![Cronologia de Exames](caminho/para/imagem/cronologia_exames.png)
 
 ## Tecnologias Utilizadas:
 
