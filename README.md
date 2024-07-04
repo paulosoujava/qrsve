@@ -31,17 +31,17 @@
 ## Screenshots:
 
 
-![Tela](res/images/page1.png)
-![Tela](res/images/page2.png)
-![Tela](res/images/page3.png)
-![Tela](res/images/page4.png)
-![Tela](res/images/page4-1.png)
-![Tela](res/images/page4-2.png)
-![Tela](res/images/page7.png)
-![Tela](res/images/page8.png)
-![Tela](res/images/page9.png)
-![Tela](res/images/page10.png)
-![Tela](res/images/page11.png)
+![Tela](app/src/main/res/images/page1.png)
+![Tela](app/src/main/res/images/page2.png)
+![Tela](app/src/main/res/images/page3.png)
+![Tela](app/src/main/res/images/page4.png)
+![Tela](app/src/main/res/images/page4-1.png)
+![Tela](app/src/main/res/images/page4-2.png)
+![Tela](app/src/main/res/images/page7.png)
+![Tela](app/src/main/res/images/page8.png)
+![Tela](app/src/main/res/images/page9.png)
+![Tela](app/src/main/res/images/page10.png)
+![Tela](app/src/main/res/images/page11.png)
 
 
 ## Tecnologias Utilizadas:
