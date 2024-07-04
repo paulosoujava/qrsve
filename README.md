@@ -1,4 +1,5 @@
-# QRSave - Revolucionando a Triagem em Clínicas com IA e QR Codes
+# QRSave 
+## Revolucionando a Triagem em Clínicas com IA e QR Codes
 
 **QRSave** é um aplicativo inovadorque utiliza Inteligência Artificial (Gemini) e QR Codes para otimizar o processo de triagem em clínicas médicas, proporcionando uma experiência mais eficiente e personalizada tanto para pacientes quanto para médicos.
 
