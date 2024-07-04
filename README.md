@@ -31,17 +31,16 @@
 ## Screenshots:
 
 
-![Tela](app/src/main/res/images/page1.png)
-![Tela](app/src/main/res/images/page2.png)
-![Tela](app/src/main/res/images/page3.png)
-![Tela](app/src/main/res/images/page4.png)
-![Tela](app/src/main/res/images/page4-1.png)
-![Tela](app/src/main/res/images/page4-2.png)
-![Tela](app/src/main/res/images/page7.png)
-![Tela](app/src/main/res/images/page8.png)
-![Tela](app/src/main/res/images/page9.png)
-![Tela](app/src/main/res/images/page10.png)
-![Tela](app/src/main/res/images/page11.png)
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page1.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page2.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page4.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page4-1.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page4-2.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page7.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page8.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page9.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page10.png" width="300" >
+<img src="https://raw.githubusercontent.com/paulosoujava/qrsve/main/app/src/main/res/images/page11.png" width="300" >
 
 
 ## Tecnologias Utilizadas:
