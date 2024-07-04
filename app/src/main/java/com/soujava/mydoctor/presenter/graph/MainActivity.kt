@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.soujava.mydoctor.domain.contract.ILocalRepository
 
+
 import com.soujava.mydoctor.presenter.screens.access.login.LoginScreen
 import com.soujava.mydoctor.presenter.screens.access.register.RegisterScreen
 import com.soujava.mydoctor.presenter.screens.chronology.ChronologyScreen
@@ -33,8 +34,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContent {
             enableEdgeToEdge()
             val navController = rememberNavController()

@@ -1,6 +1,11 @@
 package com.soujava.mydoctor.presenter.screens.genericMedication
 
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.animation.AnimatedVisibility
@@ -30,10 +35,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,16 +48,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.soujava.mydoctor.core.takePhoto
+
 import com.soujava.mydoctor.presenter.screens.commons.AppDefaultButton
 import com.soujava.mydoctor.presenter.screens.commons.AppSpace
 import com.soujava.mydoctor.presenter.screens.commons.AppText
 import com.soujava.mydoctor.presenter.screens.commons.AppTextButtonSmall
 import com.soujava.mydoctor.presenter.screens.commons.CameraPreview
 import com.soujava.mydoctor.presenter.screens.commons.LoadingButton
+import com.soujava.mydoctor.presenter.screens.commons.Permissions
 import com.soujava.mydoctor.presenter.screens.commons.SpaceType
 import com.soujava.mydoctor.presenter.screens.commons.Types
 import com.soujava.mydoctor.presenter.ui.theme.AppFont
@@ -59,6 +72,7 @@ import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.darkGray
 import com.soujava.mydoctor.presenter.ui.theme.red
 import com.soujava.mydoctor.presenter.ui.theme.white
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -83,6 +97,13 @@ fun GenericMedicationScreen(navController: NavHostController) {
         mutableStateOf(false)
     }
 
+    val permissionOk = remember {
+        mutableStateOf(false)
+    }
+
+    Permissions(context = context){
+        permissionOk.value = it
+    }
 
     Scaffold(
         topBar = {
@@ -149,11 +170,8 @@ fun GenericMedicationScreen(navController: NavHostController) {
                                     ),
                             )
                         }
-
                     })
-
             }
-
         }
     ) {
         Box {
@@ -171,25 +189,28 @@ fun GenericMedicationScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                if (showCamera && !state.loading) {
-                    CameraPreview(
-                        modifier = Modifier
-                            .size(300.dp, 350.dp)
-                            .clip(RoundedCornerShape(10.dp)),
-                        controller = controller,
-                    )
-
-                    AppDefaultButton(label = "Tirar foto") {
-                        takePhoto(
+                if (permissionOk.value) {
+                    if (showCamera && !state.loading) {
+                        CameraPreview(
+                            modifier = Modifier
+                                .size(300.dp, 350.dp)
+                                .clip(RoundedCornerShape(10.dp)),
                             controller = controller,
-                            context = context,
-                            onPhotoTaken = {
-                                showCamera = false
-                                viewModel.onTakePhoto(it)
-                            }
                         )
+
+                        AppDefaultButton(label = "Tirar foto") {
+                            takePhoto(
+                                controller = controller,
+                                context = context,
+                                onPhotoTaken = {
+                                    showCamera = false
+                                    viewModel.onTakePhoto(it)
+                                }
+                            )
+                        }
                     }
                 }
+
                 if (bitMaps.value.isNotEmpty()) {
                     Image(
                         painter = rememberAsyncImagePainter(model = bitMaps.value[0]),
