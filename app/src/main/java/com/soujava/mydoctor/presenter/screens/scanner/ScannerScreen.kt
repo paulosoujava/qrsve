@@ -1,14 +1,8 @@
 package com.soujava.mydoctor.presenter.screens.scanner
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,11 +20,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material.icons.outlined.Camera
-import androidx.compose.material.icons.outlined.DocumentScanner
 import androidx.compose.material.icons.outlined.GeneratingTokens
-import androidx.compose.material.icons.outlined.QrCode
 import androidx.compose.material.icons.outlined.QrCodeScanner
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,15 +35,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -61,10 +50,8 @@ import com.google.zxing.integration.android.IntentResult
 import com.soujava.mydoctor.core.startQRScanner
 import com.soujava.mydoctor.presenter.graph.ANALYZE_SCREEN
 import com.soujava.mydoctor.presenter.graph.OTHER_APP_SCREEN
-import com.soujava.mydoctor.presenter.graph.QRCODE_SCANNER_SCREEN
 import com.soujava.mydoctor.presenter.screens.commons.AppIconButton
 import com.soujava.mydoctor.presenter.screens.commons.BottomButtonCard
-import com.soujava.mydoctor.presenter.screens.commons.LoadingButton
 import com.soujava.mydoctor.presenter.ui.theme.AppFont
 import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.lightGray
@@ -81,6 +68,7 @@ object ScannerScreen {
 fun ScannerScreen(
     context: Activity,
     navController: NavHostController,
+    permissionOk: MutableState<Boolean>,
 ) {
     val viewModel: ScannerViewModel = koinViewModel()
     val state = viewModel.state.collectAsState()
@@ -115,7 +103,7 @@ fun ScannerScreen(
                 title = {
                     Column(
                         modifier = Modifier
-                            .padding(top =30.dp, start = 12.dp, end = 12.dp)
+                            .padding(top = 30.dp, start = 12.dp, end = 12.dp)
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
@@ -192,7 +180,8 @@ fun ScannerScreen(
                             contentColor = white
                         ),
                         onClick = {
-                            startQRScanner(context, qrScanLauncher)
+                            if (permissionOk.value)
+                                startQRScanner(context, qrScanLauncher)
                         }) {
                         Icon(
                             Icons.Outlined.QrCodeScanner,

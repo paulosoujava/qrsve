@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,6 +16,7 @@ import com.soujava.mydoctor.domain.contract.ILocalRepository
 import com.soujava.mydoctor.presenter.screens.access.login.LoginScreen
 import com.soujava.mydoctor.presenter.screens.access.register.RegisterScreen
 import com.soujava.mydoctor.presenter.screens.chronology.ChronologyScreen
+import com.soujava.mydoctor.presenter.screens.commons.Permissions
 import com.soujava.mydoctor.presenter.screens.history.HistoryScreen
 import com.soujava.mydoctor.presenter.screens.genericMedication.GenericMedicationScreen
 
@@ -43,6 +46,15 @@ class MainActivity : ComponentActivity() {
 
             MyDoctorTheme {
                 Surface {
+
+                    val permissionOk = remember {
+                        mutableStateOf(false)
+                    }
+
+                    Permissions(context = this){
+                        permissionOk.value = it
+                    }
+
                     NavHost(
                         navController = navController,
                         startDestination =  if(session.getProfile() !=null) START_SCREEN else LOGIN_SCREEN
@@ -56,7 +68,7 @@ class MainActivity : ComponentActivity() {
                             SearchScreen( navController = navController)
                         }
                         composable(CHRONOLOGY_SCREEN) {
-                            ChronologyScreen( navController = navController)
+                            ChronologyScreen( navController = navController, permissionOk=permissionOk)
                         }
                         composable(LOGIN_SCREEN) {
                             LoginScreen( navController = navController)
@@ -75,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(OTHER_APP_SCREEN) {
                             GenericMedicationScreen(
-                                navController = navController
+                                navController = navController, permissionOk=permissionOk
                             )
                         }
                         composable(TRIAGE_ONE_SCREEN) {
@@ -86,7 +98,7 @@ class MainActivity : ComponentActivity() {
                         composable(QRCODE_SCANNER_SCREEN) {
                             ScannerScreen(
                                 context = this@MainActivity,
-                                navController = navController
+                                navController = navController, permissionOk=permissionOk
                             )
                         }
                         composable(TRIAGE_TWO_SCREEN) {
@@ -96,7 +108,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(HISTORY_SCREEN) {
                             HistoryScreen(
-                                navController = navController
+                                navController = navController, permissionOk=permissionOk
                             )
                         }
                         composable(QRCODE_SCREEN) {
