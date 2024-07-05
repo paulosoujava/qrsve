@@ -39,6 +39,7 @@ import com.soujava.mydoctor.presenter.ui.theme.white
 fun AppIconButton(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    tint: Color = black,
     onClick: () -> Unit
 ) {
     IconButton(
@@ -48,7 +49,7 @@ fun AppIconButton(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = black
+            tint = tint
         )
     }
 }

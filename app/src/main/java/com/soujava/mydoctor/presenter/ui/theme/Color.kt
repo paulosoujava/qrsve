@@ -18,6 +18,7 @@ val lightGray = Color.LightGray
 val darkGray = Color.DarkGray
 val gray = Color.Gray
 val red = Color.Red
+val blue = Color.Blue
 val redDark = Color(0xFF2E0707)
 val green = Color.Green
 val greenLight = Color(0xFF204422)

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.sharp.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.AttachFile
+import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.material.icons.outlined.DocumentScanner
 import androidx.compose.material.icons.outlined.History
@@ -65,6 +66,7 @@ import com.soujava.mydoctor.presenter.graph.PROFILE_SCREEN
 import com.soujava.mydoctor.presenter.graph.QRCODE_SCANNER_SCREEN
 import com.soujava.mydoctor.presenter.graph.QRCODE_SCREEN
 import com.soujava.mydoctor.presenter.graph.SEARCH_SCREEN
+import com.soujava.mydoctor.presenter.graph.VIDEO_CALL
 import com.soujava.mydoctor.presenter.screens.commons.AppDefaultButton
 import com.soujava.mydoctor.presenter.screens.commons.AppIconButton
 import com.soujava.mydoctor.presenter.screens.commons.AppSpace
@@ -126,6 +128,7 @@ fun StartPageScreen(
         PROFILE_SCREEN to Icons.Outlined.Person,
         HISTORY_SCREEN to Icons.Outlined.History,
         CHRONOLOGY_SCREEN to Icons.Outlined.HistoryToggleOff,
+        VIDEO_CALL to Icons.Outlined.Call,
     )
 
     val scope = rememberCoroutineScope()

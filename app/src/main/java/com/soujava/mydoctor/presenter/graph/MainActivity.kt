@@ -29,11 +29,11 @@ import com.soujava.mydoctor.presenter.screens.search.SearchScreen
 import com.soujava.mydoctor.presenter.screens.start.StartPageScreen
 import com.soujava.mydoctor.presenter.screens.triage.TriageOneScreen
 import com.soujava.mydoctor.presenter.screens.triage.TriageStepTwoScreen
+import com.soujava.mydoctor.presenter.screens.videoCall.VideoCallScree
 import com.soujava.mydoctor.presenter.ui.theme.MyDoctorTheme
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +41,7 @@ class MainActivity : ComponentActivity() {
             enableEdgeToEdge()
             val navController = rememberNavController()
 
-
-            val session : ILocalRepository by inject()
+            val session: ILocalRepository by inject()
 
             MyDoctorTheme {
                 Surface {
@@ -51,27 +50,35 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(false)
                     }
 
-                    Permissions(context = this){
+                    Permissions(context = this) {
                         permissionOk.value = it
                     }
 
                     NavHost(
                         navController = navController,
-                        startDestination =  if(session.getProfile() !=null) START_SCREEN else LOGIN_SCREEN
+                        startDestination = if (session.getProfile() != null) START_SCREEN else LOGIN_SCREEN
                     ) {
+
+                        composable(VIDEO_CALL) {
+                            VideoCallScree(navController = navController)
+                        }
+
                         composable(PROFILE_SCREEN) {
                             ProfileScreen(
                                 navController = navController
                             )
                         }
                         composable(SEARCH_SCREEN) {
-                            SearchScreen( navController = navController)
+                            SearchScreen(navController = navController)
                         }
                         composable(CHRONOLOGY_SCREEN) {
-                            ChronologyScreen( navController = navController, permissionOk=permissionOk)
+                            ChronologyScreen(
+                                navController = navController,
+                                permissionOk = permissionOk
+                            )
                         }
                         composable(LOGIN_SCREEN) {
-                            LoginScreen( navController = navController)
+                            LoginScreen(navController = navController)
                         }
                         composable(START_SCREEN) {
                             StartPageScreen(
@@ -87,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(OTHER_APP_SCREEN) {
                             GenericMedicationScreen(
-                                navController = navController, permissionOk=permissionOk
+                                navController = navController, permissionOk = permissionOk
                             )
                         }
                         composable(TRIAGE_ONE_SCREEN) {
@@ -98,7 +105,7 @@ class MainActivity : ComponentActivity() {
                         composable(QRCODE_SCANNER_SCREEN) {
                             ScannerScreen(
                                 context = this@MainActivity,
-                                navController = navController, permissionOk=permissionOk
+                                navController = navController, permissionOk = permissionOk
                             )
                         }
                         composable(TRIAGE_TWO_SCREEN) {
@@ -108,7 +115,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(HISTORY_SCREEN) {
                             HistoryScreen(
-                                navController = navController, permissionOk=permissionOk
+                                navController = navController, permissionOk = permissionOk
                             )
                         }
                         composable(QRCODE_SCREEN) {
