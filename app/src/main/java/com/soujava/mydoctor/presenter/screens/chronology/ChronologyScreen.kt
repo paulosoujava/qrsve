@@ -106,7 +106,7 @@ fun ChronologyScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                AppText(types = Types.REGULAR, text = "Histórico de exames")
+                                AppText(types = Types.REGULAR, text = "Cronologia de exames")
                                 if (state.value.events != ChronologyType.CAMERA)
                                     AnimatedVisibility(visible = true) {
                                         IconButton(
@@ -174,7 +174,7 @@ fun ChronologyScreen(
                         types = Types.REGULAR,
                         text = "Clique no icone acima e envie os documento que você deseja analisar.",
                         color = black.copy(alpha = 0.5f),
-                        modifier = Modifier.padding(top = 200.dp, start = 20.dp, end = 20.dp)
+                        modifier = Modifier.padding( start = 20.dp, end = 20.dp)
                     )
                 }
             }

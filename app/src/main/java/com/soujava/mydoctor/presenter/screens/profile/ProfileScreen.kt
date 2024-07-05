@@ -1,6 +1,7 @@
 package com.soujava.mydoctor.presenter.screens.profile
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
@@ -115,12 +117,10 @@ fun ProfileScreen(navController: NavHostController = rememberNavController()) {
         selectedOptionMedication.value =
             if (profile.clincal?.hasMedication == true) "Sim" else "Não"
     }
-Log.d("PROFILE", "PROFILE: ${profile?.allFieldsFilled() == true}")
-    val showAddress = remember { mutableStateOf(false) }
-    val showClinic = remember { mutableStateOf(false) }
+
 
     val currentKeyboard = LocalSoftwareKeyboardController.current
-
+    val context = LocalContext.current
     var isKeyboardOpen by remember { mutableStateOf(false) }
     val view = LocalView.current
     LaunchedEffect(key1 = view) {
@@ -130,8 +130,6 @@ Log.d("PROFILE", "PROFILE: ${profile?.allFieldsFilled() == true}")
         }
     }
 
-    showAddress.value = profile?.allFieldsFilled() == true
-    showClinic.value = showAddress.value
 
 
     Scaffold(
@@ -162,28 +160,33 @@ Log.d("PROFILE", "PROFILE: ${profile?.allFieldsFilled() == true}")
                                     fontSize = 13.sp,
                                     fontFamily = AppFont.light,
                                     color = when (title) {
-                                        "Endereço" -> if (showAddress.value) black else lightGray
-                                        "Dados Clínicos" -> if (showClinic.value) black else lightGray
+                                        "Endereço" -> black
+                                        "Dados Clínicos" -> black
                                         else -> black
                                     }
                                 )
                             },
                             selected = selectedTabIndex == index,
                             onClick = {
-                                when (title) {
-                                    "Endereço" -> if (showAddress.value) selectedTabIndex =
-                                        index else null
+                                Log.d("PROFILE", "CLICK ${state.value.profile?.allFieldsFilled() == false}")
+                                if (state.value.profile?.allFieldsFilled() != false) {
 
-                                    "Dados Clínicos" -> if (showClinic.value) selectedTabIndex =
-                                        index else null
-
-                                    else -> selectedTabIndex = index
-                                }
+                                    Toast.makeText(
+                                        context,
+                                        "Por favor, preencha todos campos!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else
+                                    when (title) {
+                                        "Endereço" -> selectedTabIndex = index
+                                        "Dados Clínicos" -> selectedTabIndex = index
+                                        else -> selectedTabIndex = index
+                                    }
 
                             },
                             selectedContentColor = black,
                             unselectedContentColor = black.copy(alpha = 0.9f),
-                            )
+                        )
                     }
                 }
 
@@ -224,7 +227,6 @@ Log.d("PROFILE", "PROFILE: ${profile?.allFieldsFilled() == true}")
                         )
                     } else {
                         selectedTabIndex = 1
-                        showAddress.value = true
                     }
 
                 }
@@ -257,7 +259,6 @@ Log.d("PROFILE", "PROFILE: ${profile?.allFieldsFilled() == true}")
                             )
                         } else {
                             selectedTabIndex = 2
-                            showClinic.value = true
                         }
 
                     }
