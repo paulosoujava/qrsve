@@ -227,7 +227,7 @@ fun MedicalPrescriptionScreen(
                                     .clip(CircleShape),
                                 onClick = {
                                     scope.launch {
-                                        delay(1000)
+                                        delay(3000)
                                         context.startActivity(
                                             Intent(
                                                 context,
