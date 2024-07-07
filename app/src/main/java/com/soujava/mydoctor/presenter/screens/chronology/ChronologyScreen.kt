@@ -101,6 +101,7 @@ fun ChronologyScreen(
                         }
                     },
                     title = {
+
                         Column{
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
