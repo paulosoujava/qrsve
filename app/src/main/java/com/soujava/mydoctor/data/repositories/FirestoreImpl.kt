@@ -9,17 +9,47 @@ import com.soujava.mydoctor.core.getFormattedDate
 import com.soujava.mydoctor.domain.contract.IExternalRepository
 import com.soujava.mydoctor.domain.models.Data
 import com.soujava.mydoctor.domain.models.History
+import com.soujava.mydoctor.domain.models.MedicalPrescription
 import com.soujava.mydoctor.domain.models.Patient
 import com.soujava.mydoctor.domain.models.Profile
 
 
 const val TRIAGE = "profiles"
 const val PATIENT = "qrcodes"
-const val RESUME = "resume"
+const val MEDICATIONS = "medications"
 
 class FirestoreImpl : IExternalRepository {
 
     private fun instance(uid: String) = Firebase.firestore.collection(TRIAGE).document(uid)
+
+    override fun getUID(onResult: (String?) -> Unit) {
+        val session = Firebase.auth.currentUser?.uid
+        onResult(session)
+    }
+
+    override fun getMedications(onResult: (List<MedicalPrescription>) -> Unit) {
+        val uid = Firebase.auth.currentUser?.uid
+        Firebase.firestore.collection(MEDICATIONS).whereEqualTo("uid", uid)
+            .get()
+            .addOnSuccessListener {
+                onResult(it.toObjects(MedicalPrescription::class.java))
+            }
+    }
+
+
+    override fun addMedications(list: List<MedicalPrescription>, onResult: (Boolean) -> Unit) {
+        val medicationsCollection = Firebase.firestore.collection(MEDICATIONS)
+        list.forEach { medication ->
+            medicationsCollection.add(medication)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        onResult(true)
+                    } else {
+                        onResult(false)
+                    }
+                }
+        }
+    }
 
 
     override fun saveProfile(
@@ -103,7 +133,6 @@ class FirestoreImpl : IExternalRepository {
                 }
             }
     }
-
 
     override fun saveInStore(patient: Patient, onResult: (Boolean) -> Unit) {
         Firebase.firestore.collection(PATIENT)

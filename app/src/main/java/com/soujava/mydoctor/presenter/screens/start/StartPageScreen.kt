@@ -90,29 +90,11 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartPageScreen(
-    application: Application,
     navController: NavHostController
 ) {
 
-    /*  val voiceToTextParser by lazy {
-          VoiceToTextParser(application)
-      }*/
-
-
     val viewModel: StartViewModel = koinViewModel()
 
-    /*var canRecord by remember { mutableStateOf(false) }
-
-    val recordAudioLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            canRecord = isGranted
-        }
-    )
-
-    LaunchedEffect(key1 = recordAudioLauncher) {
-        recordAudioLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
-    }*/
 
     // val state by voiceToTextParser.state.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
@@ -132,7 +114,7 @@ fun StartPageScreen(
     )
     val icons2 = mapOf(
         CHRONOLOGY_SCREEN to Icons.Outlined.HistoryToggleOff,
-        VIDEO_CALL to Icons.Outlined.Call,
+        //VIDEO_CALL to Icons.Outlined.Call,
         MEDICAL_PRESCRIPTION_SCREEN to Icons.Outlined.AttachFile,
     )
 

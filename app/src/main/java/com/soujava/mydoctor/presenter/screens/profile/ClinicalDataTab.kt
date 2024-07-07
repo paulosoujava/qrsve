@@ -46,9 +46,6 @@ import com.soujava.mydoctor.presenter.ui.theme.AppFont
 import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.lightGray
 import com.soujava.mydoctor.presenter.ui.theme.white
-import com.stevdzasan.messagebar.ContentWithMessageBar
-import com.stevdzasan.messagebar.rememberMessageBarState
-import java.lang.Exception
 
 
 @Composable
@@ -209,6 +206,11 @@ fun ClinicalDataTab(
             }
         }
 
+        HorizontalDivider(
+            color = lightGray,
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 36.dp)
+        )
         AppSpace(SpaceType.MEDIUM)
         AppText(types = Types.SMALL, text = "Pratica atividades fisícas?")
         Row(

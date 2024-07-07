@@ -67,21 +67,18 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(libs.core)
     implementation(libs.okhttp)
-    implementation("com.google.accompanist:accompanist-permissions:0.31.2-alpha") // Or a later version
-    implementation("com.github.stevdza-san:MessageBarCompose:1.0.8")
-    implementation("io.coil-kt:coil-compose:2.4.0") // Use the latest version available
+    implementation(libs.accompanist.permissions) // Or a later version
+    implementation(libs.coil.compose) // Use the latest version available
 
-    val cameraxVersion = "1.3.0-rc01"
 
-    implementation("androidx.camera:camera-core:$cameraxVersion")
-    implementation("androidx.camera:camera-camera2:$cameraxVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
-    implementation("androidx.camera:camera-video:$cameraxVersion")
-    implementation("androidx.camera:camera-view:$cameraxVersion")
-    implementation("androidx.camera:camera-extensions:$cameraxVersion")
 
-    implementation("com.mesibo.api:webrtc:1.0.5")
-    implementation("org.java-websocket:Java-WebSocket:1.5.3")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
 
     implementation(libs.core)
 

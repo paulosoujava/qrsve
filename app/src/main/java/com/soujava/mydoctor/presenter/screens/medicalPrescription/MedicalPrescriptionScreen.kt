@@ -1,6 +1,11 @@
 package com.soujava.mydoctor.presenter.screens.medicalPrescription
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -18,6 +23,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,17 +59,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
+import com.soujava.mydoctor.core.calculateEndDate
 import com.soujava.mydoctor.core.getFormattedDate
+import com.soujava.mydoctor.domain.models.MedicalPrescription
 import com.soujava.mydoctor.presenter.screens.commons.AppSpace
 import com.soujava.mydoctor.presenter.screens.commons.AppText
 import com.soujava.mydoctor.presenter.screens.commons.EmptyData
 import com.soujava.mydoctor.presenter.screens.commons.Loading
+import com.soujava.mydoctor.presenter.screens.commons.LoadingButton
 import com.soujava.mydoctor.presenter.screens.commons.SpaceType
 import com.soujava.mydoctor.presenter.screens.commons.TextArea
 import com.soujava.mydoctor.presenter.screens.commons.TextField
 import com.soujava.mydoctor.presenter.screens.commons.Types
 import com.soujava.mydoctor.presenter.screens.history.Events
 import com.soujava.mydoctor.presenter.screens.medicalPrescription.component.CameraMedicalPrescription
+import com.soujava.mydoctor.presenter.screens.medicalPrescription.component.ItemCard
 import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.blue
 import com.soujava.mydoctor.presenter.ui.theme.white
@@ -71,85 +82,15 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
-@Preview
-@Composable
-private fun Show() {
-    Column(
-        modifier = Modifier
-            .padding(top = 60.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        AppText(
-            types = Types.SMALL,
-            text = "Encontramos estas informações por favor verifique se esta correto"
-        )
-
-        val crm = remember { mutableStateOf("") }
-        val doctor = remember { mutableStateOf("") }
-        val duration = remember { mutableStateOf("") }
-        val qtdPerDay = remember { mutableStateOf("") }
-        val nameOfMedications = remember { mutableStateOf("") }
-        val description = remember { mutableStateOf("") }
-        val initDate = remember { mutableStateOf("") }
-
-        TextField(input = doctor, label = "DR/a", placeholder = "DR/a")
-        AppSpace(SpaceType.SMALL)
-        TextField(input = crm, label = "CRM", placeholder = "CRM")
-        AppSpace(SpaceType.SMALL)
-        TextField(
-            input = nameOfMedications,
-            label = "Nome do medicamento",
-            placeholder = "Nome do medicamento"
-        )
-        AppSpace(SpaceType.SMALL)
-        TextField(
-            input = qtdPerDay,
-            label = "Quantidade por dia",
-            placeholder = "Quantidade por dia"
-        )
-        AppSpace(SpaceType.SMALL)
-        TextField(
-            input = duration,
-            label = "Duração deste remédio",
-            placeholder = "Duração deste remédio"
-        )
-        AppSpace(SpaceType.SMALL)
-        TextArea(
-            input = description,
-            label = "Descrição",
-            placeholder = "Descrição",
-            modifier = Modifier.padding(
-                start = 20.dp,
-                end = 20.dp,
-            )
-        )
-        AppSpace(SpaceType.SMALL)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextButton(onClick = {
-                initDate.value = getFormattedDate()
-            }) {
-                AppText(text = "Hoje mesmo", types = Types.SMALL, color = blue)
-            }
-        }
-
-        TextField(
-            input = initDate,
-            label = "Quando vou começar a tomar este remédio?",
-            placeholder = "digite a data de inicio"
-        )
-        AppSpace(SpaceType.LARGE)
-        HorizontalDivider()
-        AppSpace(SpaceType.LARGE)
-    }
-}
+import android.content.pm.PackageManager
+import android.os.Looper
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.core.content.ContextCompat
+import java.util.logging.Handler
 
 
+@SuppressLint("ScheduleExactAlarm")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MedicalPrescriptionScreen(
@@ -177,6 +118,8 @@ fun MedicalPrescriptionScreen(
     ) {
         canOverlay.value = Settings.canDrawOverlays(context)
     }
+
+    val listOfMedications: MutableList<MedicalPrescription> = mutableListOf()
     val scope = rememberCoroutineScope()
 
     val intent = remember {
@@ -283,21 +226,13 @@ fun MedicalPrescriptionScreen(
                                     .background(black, shape = CircleShape)
                                     .clip(CircleShape),
                                 onClick = {
-                                    if (canOverlay.value) {
-                                        scope.launch {
-                                            delay(4000)
-                                            Log.d(
-                                                "OverlayDebug",
-                                                "canOverlay value: ${canOverlay.value}"
+                                    scope.launch {
+                                        delay(1000)
+                                        context.startActivity(
+                                            Intent(
+                                                context,
+                                                OverlayActivity::class.java
                                             )
-                                            val intent = Intent(context, OverlayActivity::class.java)
-                                            context.startActivity(intent)
-                                        }
-
-                                    } else {
-                                        Log.d(
-                                            "OverlayDebug",
-                                            "canOverlay value: ${canOverlay.value}"
                                         )
                                     }
                                 }) {
@@ -315,7 +250,10 @@ fun MedicalPrescriptionScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(bottom = it.calculateBottomPadding())
+                .padding(
+                    top = 15.dp,
+                    bottom = it.calculateBottomPadding()
+                )
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -332,7 +270,17 @@ fun MedicalPrescriptionScreen(
                 }
 
                 EventsMedicalPrescription.REGULAR -> {
-                    EmptyData("Aqui você adiciona o sua receita e cria alertas.")
+                    if (state.value.listMedicalPrescription.isEmpty())
+                        EmptyData("Aqui você adiciona o sua receita e cria alertas.")
+                    else {
+                        LazyColumn(
+                            modifier = Modifier.padding(top = 80.dp)
+                        ) {
+                            items(state.value.listMedicalPrescription) { item ->
+                                ItemCard(item)
+                            }
+                        }
+                    }
                 }
 
                 EventsMedicalPrescription.ERROR -> {
@@ -366,7 +314,8 @@ fun MedicalPrescriptionScreen(
                                 val nameOfMedications =
                                     remember { mutableStateOf(item.nameOfMedications) }
                                 val description = remember { mutableStateOf(item.description) }
-                                val initDate = remember { mutableStateOf("") }
+                                val initDate = remember { mutableStateOf(item.dateBegin) }
+                                val endDate = remember { mutableStateOf(item.dateEnd) }
 
                                 TextField(input = doctor, label = "DR/a", placeholder = "DR/a")
                                 AppSpace(SpaceType.SMALL)
@@ -400,7 +349,7 @@ fun MedicalPrescriptionScreen(
                                     )
                                 )
                                 AppSpace(SpaceType.SMALL)
-                                Row(
+                                /*Row(
                                     modifier = Modifier
                                         .fillMaxWidth(),
                                     horizontalArrangement = Arrangement.End,
@@ -415,15 +364,47 @@ fun MedicalPrescriptionScreen(
                                             color = blue
                                         )
                                     }
-                                }
+                                }*/
                                 TextField(
                                     input = initDate,
                                     label = "Quando vou começar a tomar este remédio?",
                                     placeholder = "digite a data de inicio"
                                 )
+                                AppSpace(SpaceType.SMALL)
+                                TextField(
+                                    input = endDate,
+                                    label = "Quando vou terminar este remédio?",
+                                    placeholder = "digite a daata final"
+                                )
                                 AppSpace(SpaceType.LARGE)
                                 HorizontalDivider()
                                 AppSpace(SpaceType.LARGE)
+
+                                listOfMedications.add(
+                                    MedicalPrescription(
+                                        doctor = doctor.value,
+                                        crm = crm.value,
+                                        duration = duration.value,
+                                        qtdPerDay = qtdPerDay.value.toInt(),
+                                        nameOfMedications = nameOfMedications.value,
+                                        description = description.value,
+                                        status = item.status,
+                                        dateBegin = initDate.value,
+                                        dateEnd = endDate.value,
+                                        uid = state.value.uid ?: "_NO_",
+                                    )
+                                )
+                            }
+
+                            AppSpace(SpaceType.MEDIUM)
+                            LoadingButton(
+                                labelBtn = "Registrar",
+                                containerColor = black,
+                                textColor = white,
+                                isLoading = state.value.events == EventsMedicalPrescription.LOADING,
+                                enabled = state.value.events != EventsMedicalPrescription.LOADING
+                            ) {
+                                viewModel.addMedications(listOfMedications)
                             }
                         }
                     }

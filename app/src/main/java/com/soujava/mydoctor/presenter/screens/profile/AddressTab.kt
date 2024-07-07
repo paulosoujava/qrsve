@@ -52,11 +52,6 @@ import com.soujava.mydoctor.presenter.screens.commons.Types
 import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.lightGray
 import com.soujava.mydoctor.presenter.ui.theme.white
-import com.stevdzasan.messagebar.ContentWithMessageBar
-import com.stevdzasan.messagebar.rememberMessageBarState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.lang.Exception
 
 
 @Composable

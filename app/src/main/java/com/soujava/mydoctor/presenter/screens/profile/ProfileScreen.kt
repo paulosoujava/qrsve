@@ -171,8 +171,7 @@ fun ProfileScreen(navController: NavHostController = rememberNavController()) {
                             selected = selectedTabIndex == index,
                             onClick = {
                                 Log.d("PROFILE", "CLICK ${state.value.profile?.allFieldsFilled() == false}")
-                                if (state.value.profile?.allFieldsFilled() != false) {
-
+                                if (state.value.profile?.allFieldsFilled() == false) {
                                     Toast.makeText(
                                         context,
                                         "Por favor, preencha todos campos!",
@@ -297,7 +296,9 @@ fun ProfileScreen(navController: NavHostController = rememberNavController()) {
                                     hasMedication = selectedOptionMedication.value == "Sim",
                                     medication = moreInfoMedication.value,
                                     hasAllergy = selectedOptionAllergy.value == "Sim",
-                                    allergyContent = moreInfoAllergy.value
+                                    allergyContent = moreInfoAllergy.value,
+                                    hasExercise = selectedOptionExercise.value == "Sim",
+                                    howManyExercise = moreInfoExercise.value
                                 )
                             )
                             viewModel.saveFullProfile(profile)

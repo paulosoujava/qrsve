@@ -49,8 +49,32 @@ import java.io.File
 import java.util.concurrent.Executor
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 val gson = Gson()
+
+
+fun calculateEndDate(initialDateStr: String, period: String): String {
+    val format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+    val initialDate = LocalDateTime.parse(initialDateStr, format)
+
+    val (amount, unit) = period.split(" ")
+    val amountInt = amount.toInt()
+
+    val endDate = when (unit) {
+        "months" -> initialDate.plus(amountInt.toLong(), ChronoUnit.MONTHS)
+        "days" -> initialDate.plus(amountInt.toLong(), ChronoUnit.DAYS)
+        "hours" -> initialDate.plus(amountInt.toLong(), ChronoUnit.HOURS)
+        else -> throw IllegalArgumentException("Invalid time unit")
+    }
+
+    return endDate.format(format)
+}
+
+
+
+
 
 fun takePhotoAndSaveToFile(
     controller: LifecycleCameraController,context: Context,

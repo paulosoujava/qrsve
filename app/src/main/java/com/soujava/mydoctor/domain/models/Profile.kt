@@ -1,6 +1,7 @@
 package com.soujava.mydoctor.domain.models
 
 import android.net.Uri
+import android.util.Log
 
 
 data class UserAuth(
@@ -39,31 +40,29 @@ data class Clinical(
     var hasAllergy: Boolean? = null,
     var allergyContent: String? = null,
     var hasExercise: Boolean? = null,
-    var howManyExercise: Int? = null,
+    var howManyExercise: String? = null,
 )
 
 fun Profile.allFieldsFilled(): Boolean {
-    return name?.isNotEmpty() ?: false &&
-            phone?.isNotEmpty() ?: false &&
-            cpf?.isNotEmpty() ?: false &&
-            userAuth?.run {
-                uid?.isNotEmpty() ?: false &&
-                        email?.isNotEmpty() ?: false
-            } ?: false &&
-            address?.run {
-                cep?.isNotEmpty() ?: false &&
-                        address?.isNotEmpty() ?: false &&
-                        city?.isNotEmpty() ?: false &&
-                        state?.isNotEmpty() ?: false &&
-                        number?.isNotEmpty() ?: false &&
-                        neiborhood?.isNotEmpty() ?: false
-            } ?: false &&
-            clincal?.run {
-                hasMedication == true && medication?.isNotEmpty() == true ||
-                        hasAllergy == true && allergyContent?.isNotEmpty() == true ||
-                        hasMedication == false && medication?.isEmpty() == true &&
-                        hasAllergy == false && allergyContent?.isEmpty() == true &&
-                        hasExercise == true && howManyExercise != null
+    Log.d("PROFILE", "allFieldsFilled: $this")
 
-            } ?: false
+    return ( this.name != null || this.phone != null || this.cpf != null || this.userAuth != null || this.address != null || this.clincal != null) &&
+            this.name != "" &&
+            this.phone != "" &&
+            this.cpf != "" &&
+            this.userAuth != null &&
+            this.address?.address != "" &&
+            this.address?.city != "" &&
+            this.address?.state != "" &&
+            this.address?.cep != "" &&
+            this.address?.number != "" &&
+            this.address?.neiborhood != "" &&
+            this.address?.ddd != "" &&
+
+            this.clincal?.hasMedication != null && (this.clincal?.hasMedication == true && this.clincal?.medication?.isNotEmpty() == true || this.clincal?.hasMedication == false && this.clincal?.medication?.isEmpty() == true) &&
+            this.clincal?.hasAllergy != null && (this.clincal?.hasAllergy == true && this.clincal?.allergyContent?.isNotEmpty() == true || this.clincal?.hasAllergy == false && this.clincal?.allergyContent?.isEmpty() == true) &&
+            this.clincal?.hasExercise != null && (this.clincal?.hasExercise == true && this.clincal?.howManyExercise?.isNotEmpty() == true || this.clincal?.hasExercise == false && this.clincal?.howManyExercise?.isEmpty() == true)
+
+
+
 }

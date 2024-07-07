@@ -23,7 +23,6 @@ class App: Application() {
             modules(appModule)
         }
 
-
 //        val presenter : IAuthentication by inject()
 
     }

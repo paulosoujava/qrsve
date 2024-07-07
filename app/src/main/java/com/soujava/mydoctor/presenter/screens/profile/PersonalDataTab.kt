@@ -35,9 +35,6 @@ import com.soujava.mydoctor.presenter.screens.commons.TextField
 import com.soujava.mydoctor.presenter.screens.commons.Types
 import com.soujava.mydoctor.presenter.ui.theme.black
 import com.soujava.mydoctor.presenter.ui.theme.white
-import com.stevdzasan.messagebar.ContentWithMessageBar
-import com.stevdzasan.messagebar.rememberMessageBarState
-import java.lang.Exception
 
 
 @Composable
@@ -62,7 +59,6 @@ fun PersonalDataTab(
             .padding(10.dp),
         horizontalAlignment = Alignment.Start,
     ) {
-
 
         AppSpace(SpaceType.MEDIUM)
         TextField(

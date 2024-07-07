@@ -92,7 +92,6 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(START_SCREEN) {
                             StartPageScreen(
-                                application = application,
                                 navController = navController
                             )
                         }
