@@ -83,6 +83,7 @@ fun ChronologyScreen(
         topBar = {
             Column(
                 modifier = Modifier
+                    .background(white)
                     .fillMaxWidth()
                     .padding(
                         top = 20.dp,
@@ -100,7 +101,7 @@ fun ChronologyScreen(
                         }
                     },
                     title = {
-                        Column {
+                        Column{
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,

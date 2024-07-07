@@ -158,7 +158,10 @@ fun ListQrcodeScreen(
                                         modifier = Modifier.padding(10.dp)
                                     ) {
 
-                                        Row{
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ){
                                             IconButton(onClick = {
                                                 val intent = Intent(Intent.ACTION_SEND)
                                                 intent.type = "text/plain"

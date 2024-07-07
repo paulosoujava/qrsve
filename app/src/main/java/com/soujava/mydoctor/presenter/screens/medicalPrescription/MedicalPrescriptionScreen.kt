@@ -261,6 +261,7 @@ fun MedicalPrescriptionScreen(
             when (state.value.events) {
                 EventsMedicalPrescription.CAMERA -> {
                     if (permissionOk.value) {
+
                         CameraMedicalPrescription(
                             controller = controller,
                             context = context,

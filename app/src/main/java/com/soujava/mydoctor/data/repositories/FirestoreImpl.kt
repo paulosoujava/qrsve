@@ -14,13 +14,14 @@ import com.soujava.mydoctor.domain.models.Patient
 import com.soujava.mydoctor.domain.models.Profile
 
 
-const val TRIAGE = "profiles"
-const val PATIENT = "qrcodes"
+const val PROFILE = "profiles"
+const val TRIAGE = "triage"
+const val HISTORY = "history"
 const val MEDICATIONS = "medications"
 
 class FirestoreImpl : IExternalRepository {
 
-    private fun instance(uid: String) = Firebase.firestore.collection(TRIAGE).document(uid)
+
 
     override fun getUID(onResult: (String?) -> Unit) {
         val session = Firebase.auth.currentUser?.uid
@@ -57,7 +58,7 @@ class FirestoreImpl : IExternalRepository {
         onResult: (Boolean) -> Unit
     ) {
         profile.userAuth?.let {
-            instance(it.uid)
+            Firebase.firestore.collection(PROFILE).document(it.uid)
                 .set(profile)
                 .addOnCompleteListener { data ->
                     onResult(data.isSuccessful)
@@ -80,7 +81,7 @@ class FirestoreImpl : IExternalRepository {
         )
 
 
-        Firebase.firestore.collection(PATIENT)
+        Firebase.firestore.collection(HISTORY)
             .add(history)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -93,7 +94,7 @@ class FirestoreImpl : IExternalRepository {
 
     override fun getHistoryInStore(onResult: (List<History>) -> Unit) {
         val session = Firebase.auth.currentUser?.uid
-        Firebase.firestore.collection(PATIENT)
+        Firebase.firestore.collection(HISTORY)
             .whereEqualTo("uid", session)
             .whereEqualTo("type", "IMAGE_CONTENT")
             .get()
@@ -135,7 +136,7 @@ class FirestoreImpl : IExternalRepository {
     }
 
     override fun saveInStore(patient: Patient, onResult: (Boolean) -> Unit) {
-        Firebase.firestore.collection(PATIENT)
+        Firebase.firestore.collection(TRIAGE)
             .add(patient)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -150,7 +151,7 @@ class FirestoreImpl : IExternalRepository {
         uid: String,
         onError: (String) -> Unit, onResult: (List<Patient>) -> Unit
     ) {
-        Firebase.firestore.collection(PATIENT).whereEqualTo("uid", uid)
+        Firebase.firestore.collection(TRIAGE).whereEqualTo("uid", uid)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -167,7 +168,7 @@ class FirestoreImpl : IExternalRepository {
         onError: (String) -> Unit,
         onResult: (Patient) -> Unit
     ) {
-        Firebase.firestore.collection(PATIENT).whereEqualTo("code", code)
+        Firebase.firestore.collection(TRIAGE).whereEqualTo("code", code)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {

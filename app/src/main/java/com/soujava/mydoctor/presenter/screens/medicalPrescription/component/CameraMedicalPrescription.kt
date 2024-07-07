@@ -69,7 +69,7 @@ fun CameraMedicalPrescription(
         }
     ) {
         LazyColumn(
-            modifier = Modifier.padding(top = 80.dp),
+            modifier = Modifier.padding(top = 80.dp, bottom = 150.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
