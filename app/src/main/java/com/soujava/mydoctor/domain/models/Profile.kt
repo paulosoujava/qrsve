@@ -38,6 +38,8 @@ data class Clinical(
 //    java.lang.RuntimeException: Found conflicting getters for name isAllergy on class com.soujava.mydoctor.domain.models.Clinical
     var hasAllergy: Boolean? = null,
     var allergyContent: String? = null,
+    var hasExercise: Boolean? = null,
+    var howManyExercise: Int? = null,
 )
 
 fun Profile.allFieldsFilled(): Boolean {
@@ -60,6 +62,8 @@ fun Profile.allFieldsFilled(): Boolean {
                 hasMedication == true && medication?.isNotEmpty() == true ||
                         hasAllergy == true && allergyContent?.isNotEmpty() == true ||
                         hasMedication == false && medication?.isEmpty() == true &&
-                        hasAllergy == false && allergyContent?.isEmpty() == true
+                        hasAllergy == false && allergyContent?.isEmpty() == true &&
+                        hasExercise == true && howManyExercise != null
+
             } ?: false
 }

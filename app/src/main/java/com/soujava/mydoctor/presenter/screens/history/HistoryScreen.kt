@@ -38,7 +38,8 @@ import com.soujava.mydoctor.presenter.screens.commons.AppText
 import com.soujava.mydoctor.presenter.screens.commons.Types
 import com.soujava.mydoctor.presenter.screens.history.component.Camera
 import com.soujava.mydoctor.presenter.screens.history.component.CountPage
-import com.soujava.mydoctor.presenter.screens.history.component.EmptyData
+import com.soujava.mydoctor.presenter.screens.commons.EmptyData
+import com.soujava.mydoctor.presenter.screens.commons.Loading
 import com.soujava.mydoctor.presenter.screens.history.component.ListHistory
 
 import com.soujava.mydoctor.presenter.ui.theme.black
@@ -126,16 +127,12 @@ fun HistoryScreen(navController: NavHostController, permissionOk: MutableState<B
                     )
             }
 
-            Events.LOADING -> Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            Events.LOADING -> Loading()
 
             Events.PAGES -> CountPage()
 
-            Events.EMPTY -> EmptyData()
+            Events.EMPTY -> EmptyData("Aqui você adiciona o seu exames em um banco de dados para que fiquem acessiveis quando você " +
+                    "desejar.")
 
             Events.ERROR -> Error(state.error)
 

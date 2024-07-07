@@ -59,6 +59,8 @@ fun ClinicalDataTab(
     moreInfoMedication: MutableState<String>,
     selectedOptionAllergy: MutableState<String>,
     moreInfoAllergy: MutableState<String>,
+    selectedOptionExercise: MutableState<String>,
+    moreInfoExercise: MutableState<String>,
     onSaveFullProfile: () -> Unit
 ) {
 
@@ -66,6 +68,7 @@ fun ClinicalDataTab(
     val radioGroupItem = listOf("Sim", "Não")
     val focusRequesterMedication = remember { FocusRequester() }
     val focusRequesterAllergy = remember { FocusRequester() }
+    val focusRequesterExercise = remember { FocusRequester() }
 
     if(selectedOptionMedication.value == "Sim") {
         LaunchedEffect(key1 = focusRequesterMedication) {
@@ -75,6 +78,11 @@ fun ClinicalDataTab(
     if (selectedOptionAllergy.value == "Sim") {
         LaunchedEffect(key1 = focusRequesterAllergy) {
             focusRequesterAllergy.requestFocus()
+        }
+    }
+    if(selectedOptionExercise.value == "Sim") {
+        LaunchedEffect(key1 = focusRequesterExercise) {
+            focusRequesterExercise.requestFocus()
         }
     }
 
@@ -200,6 +208,64 @@ fun ClinicalDataTab(
                 )
             }
         }
+
+        AppSpace(SpaceType.MEDIUM)
+        AppText(types = Types.SMALL, text = "Pratica atividades fisícas?")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
+
+        ) {
+            radioGroupItem?.let { options ->
+                options.forEach { option ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = option == selectedOptionExercise.value,
+                            onClick = {
+                                selectedOptionExercise.value = option
+                                if(option == "Não")
+                                    moreInfoExercise.value = ""
+                            },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.primary,  // Cor do RadioButton selecionado
+                                unselectedColor = Color.Gray  // Cor do RadioButton não selecionado
+                            )
+                        )
+                        Text(
+                            text = option,
+                            fontSize = 17.sp,
+                            fontFamily = AppFont.regular,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        AnimatedVisibility(visible = selectedOptionExercise.value == "Sim") {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                AppText(
+                    types = Types.SMALL,
+                    text = "Com que frequencia você faz atividades fisícas"
+                )
+                TextArea(
+                    modifier = Modifier.focusRequester(focusRequesterExercise),
+                    input = moreInfoExercise,
+                    label = "Qual a frequencia em que você faz atividades fisícas?",
+                    placeholder = "digite aqui..."
+                )
+            }
+        }
+
         AppSpace(SpaceType.MEDIUM)
         Row(
             modifier = Modifier

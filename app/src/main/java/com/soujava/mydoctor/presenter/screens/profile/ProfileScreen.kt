@@ -77,6 +77,8 @@ fun ProfileScreen(navController: NavHostController = rememberNavController()) {
     var moreInfoMedication = remember { mutableStateOf("") }
     val selectedOptionAllergy = remember { mutableStateOf("") }
     var moreInfoAllergy = remember { mutableStateOf("") }
+    var selectedOptionExercise = remember { mutableStateOf("") }
+    var moreInfoExercise = remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = viewModel) {
         viewModel.getFullProfile()
@@ -272,7 +274,9 @@ fun ProfileScreen(navController: NavHostController = rememberNavController()) {
                         selectedOptionMedication = selectedOptionMedication,
                         moreInfoMedication = moreInfoMedication,
                         selectedOptionAllergy = selectedOptionAllergy,
-                        moreInfoAllergy = moreInfoAllergy
+                        moreInfoAllergy = moreInfoAllergy,
+                        selectedOptionExercise = selectedOptionExercise,
+                        moreInfoExercise = moreInfoExercise
                     ) {
                         if (!state.value.fullDataOk) {
                             val profile = Profile(

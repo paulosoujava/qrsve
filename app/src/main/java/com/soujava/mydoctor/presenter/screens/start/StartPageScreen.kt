@@ -60,6 +60,7 @@ import com.soujava.mydoctor.core.getFormattedDate
 import com.soujava.mydoctor.domain.models.Triage
 import com.soujava.mydoctor.presenter.graph.CHRONOLOGY_SCREEN
 import com.soujava.mydoctor.presenter.graph.HISTORY_SCREEN
+import com.soujava.mydoctor.presenter.graph.MEDICAL_PRESCRIPTION_SCREEN
 
 import com.soujava.mydoctor.presenter.graph.OTHER_APP_SCREEN
 import com.soujava.mydoctor.presenter.graph.PROFILE_SCREEN
@@ -127,8 +128,12 @@ fun StartPageScreen(
         SEARCH_SCREEN to Icons.Outlined.Search,
         PROFILE_SCREEN to Icons.Outlined.Person,
         HISTORY_SCREEN to Icons.Outlined.History,
+
+    )
+    val icons2 = mapOf(
         CHRONOLOGY_SCREEN to Icons.Outlined.HistoryToggleOff,
         VIDEO_CALL to Icons.Outlined.Call,
+        MEDICAL_PRESCRIPTION_SCREEN to Icons.Outlined.AttachFile,
     )
 
     val scope = rememberCoroutineScope()
@@ -139,9 +144,6 @@ fun StartPageScreen(
             skipHiddenState = false,
         )
     )
-
-
-
 
 
     BottomSheetScaffold(
@@ -274,6 +276,19 @@ fun StartPageScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             icons.forEach { (screen, icon) ->
+                                AppIconButton(icon = icon) {
+                                    navController.navigate(screen)
+                                }
+                            }
+
+                        }
+                        Row(
+                            modifier = Modifier.padding(top = 20.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            icons2.forEach { (screen, icon) ->
                                 AppIconButton(icon = icon) {
                                     navController.navigate(screen)
                                 }

@@ -87,7 +87,7 @@ class FirestoreImpl : IExternalRepository {
                             resume = map["resume"].toString()
                         )
 
-                            Log.d("TAG", "getHistoryInStore: $myPersonaData")
+                        Log.d("TAG", "getHistoryInStore: $myPersonaData")
                         historyList.add(
                             History(
                                 createdAt = createdAt,

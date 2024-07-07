@@ -19,6 +19,7 @@ import com.soujava.mydoctor.presenter.screens.profile.ProfileViewModel
 import com.soujava.mydoctor.presenter.screens.search.SearchViewModel
 import com.soujava.mydoctor.presenter.screens.genericMedication.MedicationViewModel
 import com.soujava.mydoctor.presenter.screens.scanner.AnalyzeViewModel
+import com.soujava.mydoctor.presenter.screens.medicalPrescription.MedicalPrescriptionViewModel
 
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import com.soujava.mydoctor.presenter.screens.history.HistoryViewModel
@@ -46,4 +47,5 @@ val appModule = module {
     viewModelOf(::MedicationViewModel)
     viewModelOf(::AnalyzeViewModel)
     viewModelOf(::HistoryViewModel)
+    viewModelOf(::MedicalPrescriptionViewModel)
 }

@@ -1,9 +1,13 @@
 package com.soujava.mydoctor.presenter.graph
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +23,7 @@ import com.soujava.mydoctor.presenter.screens.chronology.ChronologyScreen
 import com.soujava.mydoctor.presenter.screens.commons.Permissions
 import com.soujava.mydoctor.presenter.screens.history.HistoryScreen
 import com.soujava.mydoctor.presenter.screens.genericMedication.GenericMedicationScreen
+import com.soujava.mydoctor.presenter.screens.medicalPrescription.MedicalPrescriptionScreen
 
 
 import com.soujava.mydoctor.presenter.screens.profile.ProfileScreen
@@ -61,6 +66,11 @@ class MainActivity : ComponentActivity() {
 
                         composable(VIDEO_CALL) {
                             VideoCallScree(navController = navController)
+                        }
+                        composable(MEDICAL_PRESCRIPTION_SCREEN) {
+                            MedicalPrescriptionScreen(
+                                navController = navController,
+                                permissionOk = permissionOk)
                         }
 
                         composable(PROFILE_SCREEN) {
@@ -128,57 +138,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+
 }
 
-val jsonString = """
-        [
-          {
-            "type": "ONE_LINE_TEXT_FIELD",
-            "label": "Onde dói a sua cabeça?"
-          },
-          {
-            "type": "SLIDER",
-            "label": "Intensidade da dor (0-10)",
-            "min": 0,
-            "max": 10
-          },
-          {
-            "type": "RADIO",
-            "label": "Tipo de dor:",
-            "options": [
-              "Latejante",
-              "Em pressão",
-              "Em pontada",
-              "Contínua",
-              "Outro"
-            ]
-          },
-           {
-            "type": "RADIO_GROUP",
-            "label": "Tipo de dor:",
-            "options": [
-              "Latejante",
-              "Em pressão",
-              "Em pontada",
-              "Contínua",
-              "Outro"
-            ]
-          },
-          {
-            "type": "CHECKBOX",
-            "label": "Você sente algum dos sintomas abaixo?",
-            "options": [
-              "Náusea",
-              "Vômito",
-              "Sensibilidade à luz",
-              "Sensibilidade ao som",
-              "Tontura",
-              "Visão turva"
-            ]
-          },
-          {
-            "type": "MORE_LINE_TEXT_FIELD",
-            "label": "Há algo mais que você gostaria de adicionar?"
-          }
-        ]
-    """

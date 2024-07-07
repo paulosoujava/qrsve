@@ -41,11 +41,16 @@ import androidx.core.content.ContextCompat
 
 
 import androidx.camera.core.ImageCapture
+import com.google.gson.reflect.TypeToken
 import com.soujava.mydoctor.domain.models.Data
 import com.soujava.mydoctor.domain.models.History
+import com.soujava.mydoctor.domain.models.MedicalPrescription
 import java.io.File
 import java.util.concurrent.Executor
 import java.text.SimpleDateFormat
+import java.util.Date
+
+val gson = Gson()
 
 fun takePhotoAndSaveToFile(
     controller: LifecycleCameraController,context: Context,
@@ -144,9 +149,10 @@ fun getBitmapFromUri(context: Context, imageUri: Uri): Bitmap? {
 }
 
 fun getFormattedDate(): String {
-    val currentDate = LocalDate.now()
-    val formatter = DateTimeFormatter.ofPattern("EEE, d 'de' MMMM", Locale("pt", "BR"))
-    return currentDate.format(formatter)
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("pt", "BR"))
+    val date = Date()
+    val formattedDate = dateFormat.format(date)
+    return formattedDate
 }
 
 fun getCurrentTime(): String {
@@ -174,14 +180,20 @@ fun currentTimeFlow(): Flow<String> = flow {
 }
 
 fun parseJson(jsonString: String): JsonTriage {
-    val gson = Gson()
     return gson.fromJson(jsonString, JsonTriage::class.java)
 
 }
 fun parseJsonHistoryData(jsonString: String): Data {
-    val gson = Gson()
     return gson.fromJson(jsonString, Data::class.java)
 
+}
+
+fun parseJsonMedicalPrescription(jsonString: String): MedicalPrescription {
+    return gson.fromJson(jsonString, MedicalPrescription::class.java)
+}
+fun parseJsonMedicalPrescriptionList(jsonString: String): List<MedicalPrescription> {
+    val listType = object : TypeToken<List<MedicalPrescription>>() {}.type
+    return gson.fromJson(jsonString, listType)
 }
 
 fun isEmailValid(email: String): Boolean {

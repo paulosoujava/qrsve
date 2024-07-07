@@ -80,6 +80,8 @@ dependencies {
     implementation("androidx.camera:camera-view:$cameraxVersion")
     implementation("androidx.camera:camera-extensions:$cameraxVersion")
 
+    implementation("com.mesibo.api:webrtc:1.0.5")
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
 
     implementation(libs.core)
 
