@@ -51,8 +51,3 @@
 **YouTube:** [https://www.youtube.com/channel/UC-S5v5GpROEHP4PF1y9C4jg](https://www.youtube.com/channel/UC-S5v5GpROEHP4PF1y9C4jg)
 
 **QRSave - Inovação e praticidade na saúde ao alcance de todos!**
-
-**Observações:**
-
-* Substitua `caminho/para/imagem/nome_da_imagem.png` pelo caminho real para suas imagens no repositório do GitHub.
-* Este README é um ponto de partida, sinta-se à vontade para adicionar mais seções, detalhes e informações relevantes sobre seu projeto.
